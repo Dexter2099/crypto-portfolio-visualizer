@@ -3,6 +3,8 @@ import { getPortfolio } from './api';
 import AddAssetForm from './components/AddAssetForm';
 import PortfolioTable from './components/PortfolioTable';
 import PortfolioChart from './components/PortfolioChart';
+import './styles.css';
+
 
 function App() {
   const [portfolio, setPortfolio] = useState([]);
