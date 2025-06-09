@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { addAsset } from '../api';
+import { toast } from 'react-toastify';
 
 export default function AddAssetForm({ onAdd }) {
   const [symbol, setSymbol] = useState('');
@@ -26,11 +27,17 @@ export default function AddAssetForm({ onAdd }) {
 
     setErrorMsg('');
     const normalizedSymbol = symbol.trim().toLowerCase();
-    await addAsset({ symbol: normalizedSymbol, quantity: qty, buy_price: price });
-    onAdd();
-    setSymbol('');
-    setQuantity('');
-    setBuyPrice('');
+    try {
+      await addAsset({ symbol: normalizedSymbol, quantity: qty, buy_price: price });
+      toast.success('Asset added');
+      onAdd();
+      setSymbol('');
+      setQuantity('');
+      setBuyPrice('');
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to add asset');
+    }
   };
 
   return (

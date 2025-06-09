@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getPortfolio } from './api';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AddAssetForm from './components/AddAssetForm';
 import PortfolioTable from './components/PortfolioTable';
 import PortfolioChart from './components/PortfolioChart';
@@ -10,8 +12,13 @@ function App() {
   const [portfolio, setPortfolio] = useState([]);
 
   const fetchData = async () => {
-    const res = await getPortfolio();
-    setPortfolio(res.data);
+    try {
+      const res = await getPortfolio();
+      setPortfolio(res.data);
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to fetch portfolio');
+    }
   };
 
   useEffect(() => {
@@ -24,6 +31,7 @@ function App() {
       <AddAssetForm onAdd={fetchData} />
       <PortfolioTable data={portfolio} onDelete={fetchData} />
       <PortfolioChart data={portfolio} />
+      <ToastContainer position="top-center" />
     </div>
   );
 }
