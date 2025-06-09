@@ -8,7 +8,8 @@ export default function AddAssetForm({ onAdd }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addAsset({ symbol, quantity: parseFloat(quantity), buy_price: parseFloat(buyPrice) });
+    const normalizedSymbol = symbol.trim().toLowerCase();
+    await addAsset({ symbol: normalizedSymbol, quantity: parseFloat(quantity), buy_price: parseFloat(buyPrice) });
     onAdd();
     setSymbol('');
     setQuantity('');
@@ -17,7 +18,7 @@ export default function AddAssetForm({ onAdd }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input placeholder="Symbol (e.g. bitcoin)" value={symbol} onChange={e => setSymbol(e.target.value)} required />
+      <input placeholder="Symbol (e.g. bitcoin - lowercase)" value={symbol} onChange={e => setSymbol(e.target.value)} required />
       <input placeholder="Quantity" type="number" value={quantity} onChange={e => setQuantity(e.target.value)} required />
       <input placeholder="Buy Price" type="number" value={buyPrice} onChange={e => setBuyPrice(e.target.value)} required />
       <button type="submit">Add Asset</button>
