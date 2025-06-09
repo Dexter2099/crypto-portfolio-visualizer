@@ -31,3 +31,12 @@ python -m venv venv
 # source venv/bin/activate  # macOS/Linux
 pip install -r requirements.txt
 python app.py
+```
+
+### Frontend (React/Vite)
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
