@@ -3,7 +3,7 @@ import { deleteAsset } from '../api';
 import { toast } from 'react-toastify';
 import EditAssetForm from './EditAssetForm';
 
-export default function PortfolioTable({ data, onDelete, onUpdate }) {
+export default function PortfolioTable({ data, totals, onDelete, onUpdate }) {
   const [editing, setEditing] = useState(null);
 
   const handleDelete = async (id) => {
@@ -52,6 +52,14 @@ export default function PortfolioTable({ data, onDelete, onUpdate }) {
             </tr>
           ))}
         </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan="4">Total</td>
+            <td>{totals.currentValue}</td>
+            <td style={{color: totals.profitLoss >= 0 ? 'green' : 'red'}}>{totals.profitLoss}</td>
+            <td></td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   );
