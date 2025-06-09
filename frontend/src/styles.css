@@ -71,3 +71,13 @@ td button:hover {
   max-width: 600px;
   margin: 0 auto;
 }
+
+.input-error {
+  border-color: red;
+}
+
+.error-message {
+  color: red;
+  width: 100%;
+  text-align: center;
+}
