@@ -37,6 +37,7 @@ python app.py
 
 ```bash
 cd frontend
+cp .env.example .env  # configure VITE_API_URL if needed
 npm install
 npm run dev
 ```
