@@ -1,7 +1,19 @@
 import React from 'react';
 import { deleteAsset } from '../api';
+import { toast } from 'react-toastify';
 
 export default function PortfolioTable({ data, onDelete }) {
+  const handleDelete = async (id) => {
+    try {
+      await deleteAsset(id);
+      toast.success('Asset removed');
+      onDelete();
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to remove asset');
+    }
+  };
+
   return (
     <table>
       <thead>
@@ -18,7 +30,7 @@ export default function PortfolioTable({ data, onDelete }) {
             <td>{item.current_price}</td>
             <td>{item.current_value}</td>
             <td style={{color: item.profit_loss >= 0 ? 'green' : 'red'}}>{item.profit_loss}</td>
-            <td><button onClick={() => { deleteAsset(item.id); onDelete(); }}>❌</button></td>
+            <td><button onClick={() => handleDelete(item.id)}>❌</button></td>
           </tr>
         ))}
       </tbody>
