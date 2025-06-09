@@ -42,6 +42,8 @@ def add_portfolio_item():
 @app.route('/portfolio/<int:item_id>', methods=['DELETE'])
 def delete_portfolio_item(item_id):
     item = PortfolioItem.query.get(item_id)
+    if item is None:
+        return jsonify({"error": "Asset not found"}), 404
     db.session.delete(item)
     db.session.commit()
     return jsonify({"message": "Asset removed"})
