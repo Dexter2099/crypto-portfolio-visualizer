@@ -1,12 +1,18 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from models import db, PortfolioItem
-from services.coingecko import get_price
+from services.coingecko import get_price, get_coin_list
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db.init_app(app)
 CORS(app)
+
+
+@app.route('/coins', methods=['GET'])
+def get_coins():
+    coins = get_coin_list()
+    return jsonify(coins)
 
 @app.route('/portfolio', methods=['GET'])
 def get_portfolio():

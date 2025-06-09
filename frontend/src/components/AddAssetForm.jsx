@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
-import { addAsset } from '../api';
+import React, { useState, useEffect } from 'react';
+import { addAsset, getCoins } from '../api';
 import { toast } from 'react-toastify';
 
 export default function AddAssetForm({ onAdd }) {
   const [symbol, setSymbol] = useState('');
   const [quantity, setQuantity] = useState('');
   const [buyPrice, setBuyPrice] = useState('');
+  const [coins, setCoins] = useState([]);
   const [errors, setErrors] = useState({ quantity: false, buyPrice: false });
   const [errorMsg, setErrorMsg] = useState('');
+
+  useEffect(() => {
+    async function loadCoins() {
+      try {
+        const res = await getCoins();
+        setCoins(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    loadCoins();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,7 +56,8 @@ export default function AddAssetForm({ onAdd }) {
   return (
     <form onSubmit={handleSubmit}>
       <input
-        placeholder="Symbol (e.g. bitcoin - lowercase)"
+        list="coin-options"
+        placeholder="Symbol (e.g. bitcoin)"
         value={symbol}
         onChange={e => setSymbol(e.target.value)}
         required
@@ -66,6 +80,13 @@ export default function AddAssetForm({ onAdd }) {
       />
       <button type="submit">Add Asset</button>
       {errorMsg && <p className="error-message">{errorMsg}</p>}
+      <datalist id="coin-options">
+        {coins.map((c) => (
+          <option key={c.id} value={c.id}>
+            {c.name} ({c.symbol})
+          </option>
+        ))}
+      </datalist>
     </form>
   );
 }

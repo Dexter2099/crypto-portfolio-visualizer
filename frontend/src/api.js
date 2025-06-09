@@ -2,6 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const API = import.meta.env.VITE_API_URL;
+const COINS_API = API.replace(/\/portfolio$/, '') + '/coins';
 
 export const getPortfolio = async () => {
   try {
@@ -35,6 +36,15 @@ export const updateAsset = async (id, data) => {
     return await axios.put(`${API}/${id}`, data);
   } catch (err) {
     toast.error('Failed to update asset');
+    throw err;
+  }
+};
+
+export const getCoins = async () => {
+  try {
+    return await axios.get(COINS_API);
+  } catch (err) {
+    toast.error('Failed to fetch coins');
     throw err;
   }
 };
