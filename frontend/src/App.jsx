@@ -29,7 +29,7 @@ function App() {
     <div style={{ padding: '2rem' }}>
       <h1>💰 Crypto Portfolio Visualizer</h1>
       <AddAssetForm onAdd={fetchData} />
-      <PortfolioTable data={portfolio} onDelete={fetchData} />
+      <PortfolioTable data={portfolio} onDelete={fetchData} onUpdate={fetchData} />
       <PortfolioChart data={portfolio} />
       <ToastContainer position="top-center" />
     </div>
