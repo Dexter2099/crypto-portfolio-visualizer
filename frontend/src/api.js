@@ -29,3 +29,12 @@ export const deleteAsset = async (id) => {
     throw err;
   }
 };
+
+export const updateAsset = async (id, data) => {
+  try {
+    return await axios.put(`${API}/${id}`, data);
+  } catch (err) {
+    toast.error('Failed to update asset');
+    throw err;
+  }
+};

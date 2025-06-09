@@ -48,6 +48,19 @@ def delete_portfolio_item(item_id):
     db.session.commit()
     return jsonify({"message": "Asset removed"})
 
+@app.route('/portfolio/<int:item_id>', methods=['PUT'])
+def update_portfolio_item(item_id):
+    data = request.json
+    item = PortfolioItem.query.get(item_id)
+    if item is None:
+        return jsonify({"error": "Asset not found"}), 404
+    if 'quantity' in data:
+        item.quantity = data['quantity']
+    if 'buy_price' in data:
+        item.buy_price = data['buy_price']
+    db.session.commit()
+    return jsonify({"message": "Asset updated"})
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
