@@ -4,6 +4,7 @@ import requests
 logger = logging.getLogger(__name__)
 
 def get_price(symbol):
+    """Return the current USD price for the given cryptocurrency symbol using CoinGecko."""
     url = f"https://api.coingecko.com/api/v3/simple/price?ids={symbol}&vs_currencies=usd"
     try:
         res = requests.get(url, timeout=10)
